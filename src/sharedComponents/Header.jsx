@@ -1,5 +1,6 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import whiteLogo from "../assets/logo/2.png";
+import { FaBars } from "react-icons/fa";
 
 const Header = () => {
   const links = [
@@ -21,28 +22,19 @@ const Header = () => {
     },
   ];
   return (
-    <nav className="navbar section">
+    <nav className="navbar section py-0 my-0">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
-            </svg>
-          </div>
+          <button
+            tabIndex={0}
+            role="button"
+            className="mr-4 border p-3 border-sec rounded-md lg:hidden"
+          >
+            <FaBars size={20} />
+          </button>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 font-semibold shadow bg-main"
           >
             {links.map((link, index) => (
               <li key={index}>
@@ -56,13 +48,13 @@ const Header = () => {
             ))}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
+        <Link to="/" className="flex items-center gap-2 text-xl">
           <img src={whiteLogo} className="logo" alt="logo" />
           <span className="hidden sm:block">EventSphere</span>
-        </a>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal font-semibold">
           {links.map((link, index) => (
             <li key={index}>
               <NavLink
@@ -76,7 +68,10 @@ const Header = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <div className="join">
+          <Link to="/auth/login" className="btn join-item bg-sec text-white">Login</Link>
+          <Link to='/auth/register' className="btn join-item bg-sec text-white">Register</Link>
+        </div>
       </div>
     </nav>
   );
