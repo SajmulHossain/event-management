@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --color-main: #98CD00;
+  --color-sec: #0118D8;
+}
+
+@layer components {
+  .section {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .logo {
+    @apply w-12 h-12 rounded-full;
+  }
+
+  .active {
+    @apply text-sec;
+  }
+}
