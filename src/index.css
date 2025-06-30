@@ -11,7 +11,7 @@
 
 @layer components {
   .section {
-    @apply max-w-7xl mx-auto my-6 py-6 md:my-8 md:py-8 lg:my-12 lg:py-12;
+    @apply max-w-7xl mx-auto px-4 my-6 py-6 md:my-8 md:py-8 lg:my-12 lg:py-12;
   }
 
   .logo {

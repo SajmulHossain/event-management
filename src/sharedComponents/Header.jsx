@@ -1,14 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { FaBars } from "react-icons/fa";
+import { IoIosLogOut } from "react-icons/io";
 import { Link, NavLink, useNavigate } from "react-router";
 import whiteLogo from "../assets/logo/2.png";
-import { FaBars } from "react-icons/fa";
-import useAuth from "../hooks/useAuth";
-import { IoIosLogOut } from "react-icons/io";
-import { error_msg } from "../utils/error.msg";
-import toast from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
-import { axiosSecure } from "../hooks/useAxiosSecure";
 import Loading from "../components/Loading";
-import { useState } from "react";
+import useAuth from "../hooks/useAuth";
+import { axiosSecure } from "../hooks/useAxiosSecure";
+import { error_msg } from "../utils/error.msg";
 
 const Header = () => {
   const { user } = useAuth();
