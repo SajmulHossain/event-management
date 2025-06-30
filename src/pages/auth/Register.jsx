@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { error_msg } from "../../utils/error.msg";
+import Loading from "../../components/Loading";
 
 const Register = () => {
   const { mutateAsync, isPending } = useMutation({
@@ -75,8 +76,9 @@ const Register = () => {
                     placeholder="Photo URL"
                     name="photo_url"
                   />
-                  <button type="submit" className="btn btn-neutral mt-4">
-                    Register
+                  <button disabled={isPending}
+                   type="submit" className="btn btn-neutral mt-4">
+                    Register {isPending && <Loading />}
                   </button>
                 </fieldset>
               </form>
