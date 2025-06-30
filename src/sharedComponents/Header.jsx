@@ -101,22 +101,47 @@ const Header = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {user ? (
-          <button
-            onClick={() => setClickLogout(true)}
-            disabled={isLoggingOut}
-            className="btn btn-dash group duration-1000"
-          >
-            Logout{" "}
-            {isLoggingOut ? (
-              <Loading />
-            ) : (
-              <IoIosLogOut
-                size={20}
-                className="group-hover:translate-x-1 transition"
-              />
-            )}
-          </button>
+        {!user ? (
+          <>
+            <div className="relative">
+              <div className="dropdown dropdown-bottom dropdown-left flex items-center">
+                <div tabIndex={0} role="button">
+                  <img
+                    src="https://sajmul.com/assets/sajmul-wU6CDYTq.png"
+                    className="logo cursor-pointer select-none"
+                    alt=""
+                  />
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                >
+                  <div
+                  className="space-y-2"
+                  >
+                    <p className="text-nowrap bg-sec p-2 font-semibold rounded-md text-white pointer-events-none text-center">
+                      Sajmul Hossain
+                    </p>
+                    <button
+                      onClick={() => setClickLogout(true)}
+                      disabled={isLoggingOut}
+                      className="btn btn-dash group duration-1000 w-full"
+                    >
+                      Logout{" "}
+                      {isLoggingOut ? (
+                        <Loading />
+                      ) : (
+                        <IoIosLogOut
+                          size={20}
+                          className="group-hover:translate-x-1 transition"
+                        />
+                      )}
+                    </button>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </>
         ) : (
           <div className="join">
             <Link to="/auth/login" className="btn join-item bg-sec text-white">

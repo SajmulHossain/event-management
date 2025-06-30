@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
         const { data } = await axiosSecure("/auth");
         setUser(data.data);
       } catch (error) {
-        console.log(error.response.data.message);
+        console.log(error?.response?.data?.message || error);
         setUser(null);
       } finally {
         setLoading(false);
