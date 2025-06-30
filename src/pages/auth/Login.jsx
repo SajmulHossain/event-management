@@ -19,11 +19,18 @@ const Login = () => {
                     className="input"
                     placeholder="Password"
                   />
-                  <div>
-                  </div>
+                  <div></div>
                   <button className="btn btn-neutral mt-4">Login</button>
                 </fieldset>
-                <div className="divider italic">Don't have an account? <Link to='/auth/register' className="link-hover font-semibold">Register</Link></div>
+                <div className="divider bg-main py-5 rounded-md italic">
+                  Don't have an account?{" "}
+                  <Link
+                    to="/auth/register"
+                    className="link-hover font-semibold"
+                  >
+                    Register
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
