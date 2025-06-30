@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "react-router";
 import { axiosSecure } from "../../hooks/useAxiosSecure";
-import toast from "react-hot-toast";
-import { error_msg } from "../../utils/error.msg";
 import Loading from "../../components/Loading";
+import toast from "react-hot-toast";
+import {error_msg} from '../../utils/error.msg'
 
 const Register = () => {
   const { mutateAsync, isPending } = useMutation({
@@ -27,6 +27,10 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
     const photo_url = form.photo_url.value;
+
+    if(!name || !email || !password || !photo_url) {
+      return error_msg("You must give all values")
+    }
 
     const data = {
       name,
@@ -54,6 +58,7 @@ const Register = () => {
                     name="name"
                     className="input"
                     placeholder="Name"
+                    required
                   />
                   <label className="label">Email</label>
                   <input
@@ -61,6 +66,7 @@ const Register = () => {
                     name="email"
                     className="input"
                     placeholder="Email"
+                    required
                   />
                   <label className="label">Password</label>
                   <input
@@ -68,6 +74,7 @@ const Register = () => {
                     className="input"
                     placeholder="Password"
                     name="password"
+                    required
                   />
                   <label className="label">Photo URL</label>
                   <input
@@ -75,6 +82,7 @@ const Register = () => {
                     className="input"
                     placeholder="Photo URL"
                     name="photo_url"
+                    required
                   />
                   <button disabled={isPending}
                    type="submit" className="btn btn-neutral mt-4">
