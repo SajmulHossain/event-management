@@ -1,6 +1,30 @@
 import { Link } from "react-router";
+import useAuth from "../../hooks/useAuth";
+import Loading from "../../components/Loading";
+import { error_msg } from "../../utils/error.msg";
 
 const Login = () => {
+  const {signIn} = useAuth();
+  const {login, isLoggingIn} = signIn;
+
+  const handleLogin = e => {
+    e.preventDefault();
+
+    const form= e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    if(!email || !password) {
+      return error_msg("Please provide email and password");
+    }
+
+    const data = {
+      email,
+      password
+    }
+
+    login(data);
+  }
     return (
       <section>
         <div className="hero place-items-stretch bg-base-200 min-h-screen">
@@ -10,18 +34,29 @@ const Login = () => {
             </div>
             <div className="card bg-base-100 w-full max-w-lg shrink-0 shadow-2xl">
               <div className="card-body">
-                <fieldset className="fieldset">
-                  <label className="label">Email</label>
-                  <input type="email" className="input" placeholder="Email" />
-                  <label className="label">Password</label>
-                  <input
-                    type="password"
-                    className="input"
-                    placeholder="Password"
-                  />
-                  <div></div>
-                  <button className="btn btn-neutral mt-4">Login</button>
-                </fieldset>
+                <form onSubmit={handleLogin}>
+                  <fieldset className="fieldset">
+                    <label className="label">Email</label>
+                    <input type="email" className="input" name="email"
+                    required
+                    placeholder="Email" />
+                    <label className="label">Password</label>
+                    <input
+                      type="password"
+                      className="input"
+                      placeholder="Password" name="password"
+                      required
+                    />
+                    <div></div>
+                    <button
+                      type="submit"
+                      disabled={isLoggingIn}
+                      className="btn btn-neutral mt-4"
+                    >
+                      Login {isLoggingIn && <Loading />}
+                    </button>
+                  </fieldset>
+                </form>
                 <div className="divider bg-main py-5 rounded-md italic">
                   Don't have an account?{" "}
                   <Link
