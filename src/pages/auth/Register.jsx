@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
 import { error_msg } from "../../utils/error.msg";
@@ -6,8 +6,10 @@ import { error_msg } from "../../utils/error.msg";
 const Register = () => {
   const { signUp } = useAuth();
   const { register, isPending } = signUp;
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -27,16 +29,17 @@ const Register = () => {
       photo_url,
     };
 
-    register(data);
+    await register(data);
+    navigate(state || "/");
   };
   return (
     <section>
-      <div className="hero place-items-stretch bg-base-200 min-h-screen">
-        <div className="hero-content flex-col">
+      <div className="hero bg-base-200 min-h-screen">
+        <div className="hero-content mx-auto flex-col">
           <div className="text-center lg:text-left">
-            <h2 className="text-5xl font-bold mb-4">Login now!</h2>
+            <h2 className="text-5xl font-bold mb-4">Register now!</h2>
           </div>
-          <div className="card bg-base-100 w-full max-w-lg shrink-0 shadow-2xl">
+          <div className="card bg-base-100 w-full max-w-lg min-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
               <form onSubmit={handleLogin}>
                 <fieldset className="fieldset">
@@ -83,7 +86,11 @@ const Register = () => {
               </form>
               <div className="divider bg-main py-5 rounded-md italic">
                 Already have an account?
-                <Link to="/auth/login" className="link-hover font-semibold">
+                <Link
+                  to="/auth/login"
+                  className="link-hover font-semibold"
+                  state={state}
+                >
                   Login
                 </Link>
               </div>

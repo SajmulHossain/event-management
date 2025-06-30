@@ -1,8 +1,41 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import whiteLogo from "../assets/logo/2.png";
 import { FaBars } from "react-icons/fa";
+import useAuth from "../hooks/useAuth";
+import { IoIosLogOut } from "react-icons/io";
+import { error_msg } from "../utils/error.msg";
+import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
+import { axiosSecure } from "../hooks/useAxiosSecure";
+import Loading from "../components/Loading";
+import { useState } from "react";
 
 const Header = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [clickLogout, setClickLogout] = useState(false);
+
+
+    const {
+      isLoading: isLoggingOut,
+    } = useQuery({
+      queryKey: ["logout"],
+      enabled: clickLogout,
+      queryFn: async () => {
+        try {
+          const { data } = await axiosSecure("/auth/logout");
+          if (data?.success) {
+            toast.success(data?.message);
+            navigate("/auth/login");
+          }
+        } catch (error) {
+          error_msg(error?.message?.response?.data);
+        }
+
+        return {};
+      },
+    });
+
   const links = [
     {
       name: "Home",
@@ -68,10 +101,35 @@ const Header = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <div className="join">
-          <Link to="/auth/login" className="btn join-item bg-sec text-white">Login</Link>
-          <Link to='/auth/register' className="btn join-item bg-sec text-white">Register</Link>
-        </div>
+        {user ? (
+          <button
+            onClick={() => setClickLogout(true)}
+            disabled={isLoggingOut}
+            className="btn btn-dash group duration-1000"
+          >
+            Logout{" "}
+            {isLoggingOut ? (
+              <Loading />
+            ) : (
+              <IoIosLogOut
+                size={20}
+                className="group-hover:translate-x-1 transition"
+              />
+            )}
+          </button>
+        ) : (
+          <div className="join">
+            <Link to="/auth/login" className="btn join-item bg-sec text-white">
+              Login
+            </Link>
+            <Link
+              to="/auth/register"
+              className="btn join-item bg-sec text-white"
+            >
+              Register
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

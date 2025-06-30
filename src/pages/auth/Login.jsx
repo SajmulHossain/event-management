@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../../components/Loading";
 import { error_msg } from "../../utils/error.msg";
@@ -6,8 +6,10 @@ import { error_msg } from "../../utils/error.msg";
 const Login = () => {
   const {signIn} = useAuth();
   const {login, isLoggingIn} = signIn;
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
-  const handleLogin = e => {
+  const handleLogin = async e => {
     e.preventDefault();
 
     const form= e.target;
@@ -23,16 +25,17 @@ const Login = () => {
       password
     }
 
-    login(data);
+    await login(data);
+    navigate(state || '/')
   }
     return (
       <section>
-        <div className="hero place-items-stretch bg-base-200 min-h-screen">
-          <div className="hero-content flex-col">
+        <div className="hero bg-base-200 min-h-screen">
+          <div className="hero-content mx-auto flex-col">
             <div className="text-center lg:text-left">
               <h2 className="text-5xl font-bold mb-4">Login now!</h2>
             </div>
-            <div className="card bg-base-100 w-full max-w-lg shrink-0 shadow-2xl">
+            <div className="card bg-base-100 w-full max-w-lg min-w-sm shrink-0 shadow-2xl">
               <div className="card-body">
                 <form onSubmit={handleLogin}>
                   <fieldset className="fieldset">
@@ -62,6 +65,7 @@ const Login = () => {
                   <Link
                     to="/auth/register"
                     className="link-hover font-semibold"
+                    state={state}
                   >
                     Register
                   </Link>

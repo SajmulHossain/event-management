@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
+import { Navigate } from "react-router";
 
 export const axiosSecure = axios.create({
   baseURL: import.meta.env.PROD
@@ -12,15 +13,16 @@ const useAxiosSecure = () => {
   useEffect(() => {
     axiosSecure.interceptors.response.use(
       (res) => res,
-      (error) => {
+      async (error) => {
         if (error.response?.status === 401 || error.response?.status === 403) {
-          console.log("error from token");
+          await axiosSecure("/auth/logout");
+          <Navigate to="/auth/login" replace={true} />;
         }
 
         return Promise.reject(error);
       }
     );
-  },[])
+  }, []);
 
   return axiosSecure;
 };
