@@ -101,15 +101,15 @@ const Header = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {!user ? (
+        {user ? (
           <>
             <div className="relative">
               <div className="dropdown dropdown-bottom dropdown-left flex items-center">
                 <div tabIndex={0} role="button">
                   <img
-                    src="https://sajmul.com/assets/sajmul-wU6CDYTq.png"
+                    src={user?.photo_url}
                     className="logo cursor-pointer select-none"
-                    alt=""
+                    alt={`${user?.name}'s profile photo`}
                   />
                 </div>
                 <ul
