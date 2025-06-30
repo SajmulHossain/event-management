@@ -34,12 +34,12 @@ const Register = () => {
   };
   return (
     <section>
-      <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content mx-auto flex-col">
+      <div className="hero bg-main min-h-screen">
+        <div className="hero-content w-full flex-col">
           <div className="text-center lg:text-left">
             <h2 className="text-5xl font-bold mb-4">Register now!</h2>
           </div>
-          <div className="card bg-base-100 w-full max-w-lg min-w-sm shrink-0 shadow-2xl">
+          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
               <form onSubmit={handleLogin}>
                 <fieldset className="fieldset">

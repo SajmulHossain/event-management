@@ -1,14 +1,14 @@
-import DateTimePicker from "react-datetime-picker";
-import useAuth from "../../hooks/useAuth";
-import "react-datetime-picker/dist/DateTimePicker.css";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
-import { useState } from "react";
-import { error_msg } from "../../utils/error.msg";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import DateTimePicker from "react-datetime-picker";
+import "react-datetime-picker/dist/DateTimePicker.css";
 import toast from "react-hot-toast";
 import Loading from "../../components/Loading";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { error_msg } from "../../utils/error.msg";
 
 const AddEvent = () => {
   const { user } = useAuth();
