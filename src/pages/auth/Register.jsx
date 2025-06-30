@@ -1,23 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
 import { Link } from "react-router";
-import { axiosSecure } from "../../hooks/useAxiosSecure";
 import Loading from "../../components/Loading";
-import toast from "react-hot-toast";
-import {error_msg} from '../../utils/error.msg'
+import useAuth from "../../hooks/useAuth";
+import { error_msg } from "../../utils/error.msg";
 
 const Register = () => {
-  const { mutateAsync, isPending } = useMutation({
-    mutationKey: ["registration"],
-    mutationFn: async (body) => {
-      const { data } = await axiosSecure.post("/auth/register", body);
-      if (data.success) {
-        toast.success("Registration successfull");
-      }
-    },
-    onError: (error) => {
-      error_msg(error?.response?.data?.message);
-    },
-  });
+  const { signUp } = useAuth();
+  const { register, isPending } = signUp;
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -28,8 +16,8 @@ const Register = () => {
     const password = form.password.value;
     const photo_url = form.photo_url.value;
 
-    if(!name || !email || !password || !photo_url) {
-      return error_msg("You must give all values")
+    if (!name || !email || !password || !photo_url) {
+      return error_msg("You must give all values");
     }
 
     const data = {
@@ -39,7 +27,7 @@ const Register = () => {
       photo_url,
     };
 
-    mutateAsync(data);
+    register(data);
   };
   return (
     <section>
@@ -84,8 +72,11 @@ const Register = () => {
                     name="photo_url"
                     required
                   />
-                  <button disabled={isPending}
-                   type="submit" className="btn btn-neutral mt-4">
+                  <button
+                    disabled={isPending}
+                    type="submit"
+                    className="btn btn-neutral mt-4"
+                  >
                     Register {isPending && <Loading />}
                   </button>
                 </fieldset>
