@@ -4,8 +4,8 @@ import { Navigate } from "react-router";
 
 export const axiosSecure = axios.create({
   baseURL: import.meta.env.PROD
-    ? import.meta.env.VITE_PROD_API
-    : import.meta.env.VITE_DEVELOPMENT_API,
+    ? import.meta.env.VITE_prod_api
+    : import.meta.env.VITE_development_api,
   withCredentials: true,
 });
 

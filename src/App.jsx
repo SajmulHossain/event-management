@@ -3,6 +3,7 @@ import Header from "./sharedComponents/Header";
 
 function App() {
   const { pathname } = useLocation();
+
   return (
     <>
       <header
