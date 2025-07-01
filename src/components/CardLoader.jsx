@@ -2,7 +2,7 @@ import React from 'react';
 
 const CardLoader = () => {
     return (
-        <div className='skeleton h-52 w-full'>
+        <div className='skeleton h-72 w-full'>
             
         </div>
     );

@@ -119,7 +119,7 @@ const Event = ({ event }) => {
         </p>
 
         <div className="card-actions justify-end">
-          {pathname === "/events" ? (
+          {pathname !== "/my-event" ? (
             <button
               ref={btnRef}
               onClick={() => joinEvent({ user_email: user.email })}

@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router";
 import Loader from "./components/Loader";
 import useAuth from "./hooks/useAuth";
 import Header from "./sharedComponents/Header";
+import Footer from "./sharedComponents/Footer";
 
 function App() {
   const { pathname } = useLocation();
@@ -14,8 +15,8 @@ function App() {
   return (
     <>
       <header
-        className={`shadow-sm bg-main/30 backdrop-blur-3xl ${
-          pathname === "/" ? "absolute w-full" : "sticky top-0 z-50"
+        className={`shadow-sm bg-main/30 z-50 backdrop-blur-3xl ${
+          pathname === "/" ? "fixed w-full" : "sticky top-0"
         }`}
       >
         <Header />
@@ -23,6 +24,7 @@ function App() {
       <main>
         <Outlet />
       </main>
+      <Footer />
     </>
   );
 }
