@@ -8,11 +8,13 @@ import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { error_msg } from "../../utils/error.msg";
+import { useRef } from "react";
 
 const Event = ({ event }) => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  const btnRef = useRef(null);
 
   const {
     _id,
@@ -33,6 +35,7 @@ const Event = ({ event }) => {
       await axiosSecure.patch(`/events/${_id}`, body);
     },
     onSuccess: () => {
+      btnRef.current.disabled = true;
       toast.success("Done");
       queryClient.invalidateQueries({ queryKey: ["events"] });
     },
@@ -81,11 +84,21 @@ const Event = ({ event }) => {
 
         <div className="card-actions justify-end">
           <button
+            ref={btnRef}
             onClick={() => joinEvent({ user_email: user.email })}
-            disabled={joiningEvent || isJoined}
-            className="btn"
+            disabled={isJoined}
+            className={`btn disabled:text-gray-400 ${
+              joiningEvent ? "cursor-not-allowed pointer-events-none" : ""
+            }`}
           >
-            Join Event {joiningEvent && <Loading />}
+            {joiningEvent ? (
+              <span className="flex items-center gap-2">
+                Joinnig
+                <Loading />
+              </span>
+            ) : (
+              "Join Event"
+            )}
           </button>
         </div>
       </div>
