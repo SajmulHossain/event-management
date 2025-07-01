@@ -11,7 +11,7 @@ import { axiosSecure } from "../hooks/useAxiosSecure";
 import { error_msg } from "../utils/error.msg";
 
 const Header = () => {
-  const { user } = useAuth();
+  const { user, fetchData, setFetchData } = useAuth();
   const navigate = useNavigate();
   const [clickLogout, setClickLogout] = useState(false);
 
@@ -25,6 +25,7 @@ const Header = () => {
         try {
           const { data } = await axiosSecure("/auth/logout");
           if (data?.success) {
+            setFetchData(!fetchData);
             toast.success(data?.message);
             navigate("/auth/login");
           }

@@ -26,7 +26,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-event",
-        element: <AddEvent />,
+        element: (
+          <PrivetRoute>
+            <AddEvent />
+          </PrivetRoute>
+        ),
       },
     ],
   },

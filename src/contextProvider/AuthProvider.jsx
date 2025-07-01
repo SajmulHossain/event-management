@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const axiosSecure = useAxiosSecure();
+  const [fetchData, setFetchData] = useState(false);
 
   const { mutateAsync: register, isPending: registerLoading } = useMutation({
     mutationKey: ["registration"],
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }) => {
       const { data } = await axiosSecure.post("/auth/login", body);
       if (data.success) {
         toast.success("Login Successful");
-        setUser(data);
+        setUser(data.data);
       }
     },
     onError: (error) => {
@@ -54,7 +55,7 @@ const AuthProvider = ({ children }) => {
     };
 
     fetchUserData();
-  }, [axiosSecure]);
+  }, [axiosSecure, fetchData]);
 
   const data = {
     signUp: {
@@ -68,6 +69,8 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     setLoading,
+    fetchData,
+    setFetchData,
   };
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 };
