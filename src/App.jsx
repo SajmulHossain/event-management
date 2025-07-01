@@ -14,8 +14,8 @@ function App() {
   return (
     <>
       <header
-        className={`shadow-sm bg-main/30 ${
-          pathname === "/" ? "backdrop-blur-3xl absolute w-full" : ""
+        className={`shadow-sm bg-main/30 backdrop-blur-3xl ${
+          pathname === "/" ? "absolute w-full" : "sticky top-0 z-50"
         }`}
       >
         <Header />

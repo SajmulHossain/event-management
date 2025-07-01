@@ -6,6 +6,7 @@ import Register from "../pages/auth/Register";
 import Home from "../pages/Home/Home";
 import AddEvent from "../pages/AddEvent/AddEvent";
 import PrivetRoute from './PrivetRoute';
+import MyEvent from "../pages/MyEvent/MyEvent";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,12 @@ const router = createBrowserRouter([
           </PrivetRoute>
         ),
       },
+      {
+        path: '/my-event',
+        element: <PrivetRoute>
+          <MyEvent />
+        </PrivetRoute>
+      }
     ],
   },
   {

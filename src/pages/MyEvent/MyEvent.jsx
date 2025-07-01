@@ -1,33 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Event from "./Event";
 import CardLoader from "../../components/CardLoader";
-import FilterBox from "./FilterBox";
-import { useState } from "react";
+import Heading from "../../components/Heading";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Event from "../Events/Event";
 import NoData from "../../components/noData";
 
-const Events = () => {
+
+
+const MyEvent = () => {
   const axiosSecure = useAxiosSecure();
-  const [time, setTime] = useState("");
-  const [search, setSearch] = useState("");
+  const { user } = useAuth();
+
 
   const { data: events = [...Array(9)], isLoading } = useQuery({
-    queryKey: ["events", time, search],
+    queryKey: ["events"],
     queryFn: async () => {
       const { data } = await axiosSecure(
-        `/events?time=${time}&search=${search}`
+        `/events?email=${user?.email}`
       );
       return data.data || [];
     },
   });
+
   return (
     <section className="section">
-      <FilterBox setTime={setTime} setSearch={setSearch} />
-      <div
-        className={`${
-          events.length ? "grid" : "block"
-        } grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}
-      >
+      <Heading
+        heading={"Your Events"}
+        paragraph={"Events that you have added"}
+      />
+      <div className={`${events.length ? 'grid': 'block'} grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
         {isLoading ? (
           events.map((_, i) => <CardLoader key={i} />)
         ) : events?.length ? (
@@ -40,4 +42,4 @@ const Events = () => {
   );
 };
 
-export default Events;
+export default MyEvent;

@@ -9,12 +9,14 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { error_msg } from "../../utils/error.msg";
 import { useRef } from "react";
+import { useLocation } from "react-router";
 
 const Event = ({ event }) => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const btnRef = useRef(null);
+  const {pathname} = useLocation();
 
   const {
     _id,
@@ -61,7 +63,7 @@ const Event = ({ event }) => {
             </span>
           </p>
 
-          <p className="flex items-center gap-1">
+          <p className="flex items-center gap-1 justify-end">
             <CiClock1 size={20} />
             <span>
               {format(new Date(date_and_time || new Date()), "h: mm BBBB")}
@@ -83,7 +85,8 @@ const Event = ({ event }) => {
         </p>
 
         <div className="card-actions justify-end">
-          <button
+          {
+            pathname === '/events' ? <button
             ref={btnRef}
             onClick={() => joinEvent({ user_email: user.email })}
             disabled={isJoined}
@@ -96,10 +99,16 @@ const Event = ({ event }) => {
                 Joinnig
                 <Loading />
               </span>
+            ) : isJoined ? (
+              "Joined"
             ) : (
               "Join Event"
             )}
-          </button>
+          </button> : <div className="space-x-2">
+            <button className="btn btn-warning">Delete Event</button>
+            <button className="btn bg-main border-none">Edit</button>
+          </div>
+          }
         </div>
       </div>
     </div>
