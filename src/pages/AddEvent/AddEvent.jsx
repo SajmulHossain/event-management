@@ -22,7 +22,7 @@ const AddEvent = () => {
     queryKey: ["events", id],
     enabled: pathname.includes("edit"),
     queryFn: async () => {
-      const { data } = await axiosSecure(`/events/${id}`);
+      const { data } = await axiosSecure(`/events/${id}?email=${user.email}`);
       return data.data || {};
     },
   });
@@ -46,7 +46,7 @@ const AddEvent = () => {
   const { mutateAsync: update, isPending: isUpdating } = useMutation({
     mutationKey: ["event"],
     mutationFn: async (body) => {
-      const { data } = await axiosSecure.put(`/events/${id}`, body);
+      const { data } = await axiosSecure.put(`/events/${id}?email=${user.email}`, body);
       if (data.success) {
         toast.success(data?.message);
         navigate("/my-event");
