@@ -38,6 +38,12 @@ const router = createBrowserRouter([
         element: <PrivetRoute>
           <MyEvent />
         </PrivetRoute>
+      },
+      {
+        path: '/edit/:id',
+        element: <PrivetRoute>
+          <AddEvent />
+        </PrivetRoute>
       }
     ],
   },

@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 import { CiCalendar, CiClock1, CiUser } from "react-icons/ci";
 import { FaUserTie } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
+import { Link, useLocation } from "react-router";
 import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { error_msg } from "../../utils/error.msg";
-import { useRef } from "react";
-import { useLocation } from "react-router";
 
 const Event = ({ event }) => {
   const axiosSecure = useAxiosSecure();
@@ -50,7 +50,9 @@ const Event = ({ event }) => {
   const { mutateAsync: deleteEvent, isPending: isDeleting } = useMutation({
     mutationKey: ["delete event"],
     mutationFn: async () => {
-      const { data } = await axiosSecure.delete(`/events/${_id}?email=${user.email}`);
+      const { data } = await axiosSecure.delete(
+        `/events/${_id}?email=${user.email}`
+      );
       if (data?.success) {
         toast.success("Event Deleted Successfully");
         queryClient.invalidateQueries({ queryKey: ["events"] });
@@ -129,7 +131,7 @@ const Event = ({ event }) => {
               >
                 Delete Event {isDeleting && <Loading />}
               </button>
-              <button className="btn bg-main border-none">Edit</button>
+              <Link to={`/edit/${_id}`} className="btn bg-main border-none">Edit</Link>
             </div>
           )}
         </div>
