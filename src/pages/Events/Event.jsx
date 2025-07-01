@@ -16,7 +16,7 @@ const Event = ({ event }) => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const btnRef = useRef(null);
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   const {
     _id,
@@ -40,6 +40,21 @@ const Event = ({ event }) => {
       btnRef.current.disabled = true;
       toast.success("Done");
       queryClient.invalidateQueries({ queryKey: ["events"] });
+    },
+    onError: (error) => {
+      error_msg(error?.response?.data?.message);
+    },
+  });
+
+  // *delete event
+  const { mutateAsync: deleteEvent, isPending: isDeleting } = useMutation({
+    mutationKey: ["delete event"],
+    mutationFn: async () => {
+      const { data } = await axiosSecure.delete(`/events/${_id}?email=${user.email}`);
+      if (data?.success) {
+        toast.success("Event Deleted Successfully");
+        queryClient.invalidateQueries({ queryKey: ["events"] });
+      }
     },
     onError: (error) => {
       error_msg(error?.response?.data?.message);
@@ -85,30 +100,38 @@ const Event = ({ event }) => {
         </p>
 
         <div className="card-actions justify-end">
-          {
-            pathname === '/events' ? <button
-            ref={btnRef}
-            onClick={() => joinEvent({ user_email: user.email })}
-            disabled={isJoined}
-            className={`btn disabled:text-gray-400 ${
-              joiningEvent ? "cursor-not-allowed pointer-events-none" : ""
-            }`}
-          >
-            {joiningEvent ? (
-              <span className="flex items-center gap-2">
-                Joinnig
-                <Loading />
-              </span>
-            ) : isJoined ? (
-              "Joined"
-            ) : (
-              "Join Event"
-            )}
-          </button> : <div className="space-x-2">
-            <button className="btn btn-warning">Delete Event</button>
-            <button className="btn bg-main border-none">Edit</button>
-          </div>
-          }
+          {pathname === "/events" ? (
+            <button
+              ref={btnRef}
+              onClick={() => joinEvent({ user_email: user.email })}
+              disabled={isJoined}
+              className={`btn disabled:text-gray-400 ${
+                joiningEvent ? "cursor-not-allowed pointer-events-none" : ""
+              }`}
+            >
+              {joiningEvent ? (
+                <span className="flex items-center gap-2">
+                  Joinnig
+                  <Loading />
+                </span>
+              ) : isJoined ? (
+                "Joined"
+              ) : (
+                "Join Event"
+              )}
+            </button>
+          ) : (
+            <div className="space-x-2">
+              <button
+                className="btn btn-warning"
+                disabled={isDeleting}
+                onClick={deleteEvent}
+              >
+                Delete Event {isDeleting && <Loading />}
+              </button>
+              <button className="btn bg-main border-none">Edit</button>
+            </div>
+          )}
         </div>
       </div>
     </div>
