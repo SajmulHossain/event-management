@@ -27,7 +27,7 @@ const Event = ({ event }) => {
     joiningPeoples,
   } = event || {};
 
-  const isJoined = joiningPeoples.find((people) => people === user.email);
+  const isJoined = joiningPeoples?.find((people) => people === user.email);
 
   const { mutateAsync: joinEvent, isPending: joiningEvent } = useMutation({
     mutationKey: ["join event"],
