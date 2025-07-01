@@ -1,13 +1,13 @@
-import { CiCalendar, CiClock1, CiUser } from "react-icons/ci";
-import { format } from "date-fns";
-import { IoLocationOutline } from "react-icons/io5";
-import { FaUserTie } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { format } from "date-fns";
 import toast from "react-hot-toast";
-import { error_msg } from "../../utils/error.msg";
+import { CiCalendar, CiClock1, CiUser } from "react-icons/ci";
+import { FaUserTie } from "react-icons/fa";
+import { IoLocationOutline } from "react-icons/io5";
 import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { error_msg } from "../../utils/error.msg";
 
 const Event = ({ event }) => {
   const axiosSecure = useAxiosSecure();
@@ -22,22 +22,24 @@ const Event = ({ event }) => {
     location,
     attendeeCount,
     author_name,
+    joiningPeoples,
   } = event || {};
 
+  const isJoined = joiningPeoples.find((people) => people === user.email);
 
-  const {mutateAsync:joinEvent, isPending: joiningEvent} = useMutation({
-    mutationKey: ['join event'],
-    mutationFn: async(body) => {
-      await axiosSecure.patch(`/events/${_id}`, body)
-    }, 
+  const { mutateAsync: joinEvent, isPending: joiningEvent } = useMutation({
+    mutationKey: ["join event"],
+    mutationFn: async (body) => {
+      await axiosSecure.patch(`/events/${_id}`, body);
+    },
     onSuccess: () => {
       toast.success("Done");
-      queryClient.invalidateQueries({queryKey: ['events']})
+      queryClient.invalidateQueries({ queryKey: ["events"] });
     },
-    onError: error => {
-      error_msg(error?.response?.data?.message)
-    }
-  })
+    onError: (error) => {
+      error_msg(error?.response?.data?.message);
+    },
+  });
 
   return (
     <div className="card bg-sec text-primary-content">
@@ -80,7 +82,7 @@ const Event = ({ event }) => {
         <div className="card-actions justify-end">
           <button
             onClick={() => joinEvent({ user_email: user.email })}
-            disabled={joiningEvent}
+            disabled={joiningEvent || isJoined}
             className="btn"
           >
             Join Event {joiningEvent && <Loading />}
