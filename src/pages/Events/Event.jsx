@@ -10,6 +10,7 @@ import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { error_msg } from "../../utils/error.msg";
+import Swal from "sweetalert2";
 
 const Event = ({ event }) => {
   const axiosSecure = useAxiosSecure();
@@ -62,6 +63,22 @@ const Event = ({ event }) => {
       error_msg(error?.response?.data?.message);
     },
   });
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteEvent();
+      }
+    });
+  }
 
   return (
     <div className="card bg-sec text-primary-content">
@@ -127,7 +144,7 @@ const Event = ({ event }) => {
               <button
                 className="btn btn-warning"
                 disabled={isDeleting}
-                onClick={deleteEvent}
+                onClick={handleDelete}
               >
                 Delete Event {isDeleting && <Loading />}
               </button>
