@@ -10,7 +10,6 @@ const Event = ({ event }) => {
     date_and_time,
     location,
     attendeeCount,
-    author_email,
     author_name,
   } = event || {};
   return (
@@ -19,15 +18,15 @@ const Event = ({ event }) => {
         <h2 className="card-title">{title}</h2>
         <p>{description}</p>
 
-        <div className="flex items-center">
+        <div className="flex items-center mt-4">
           <p className="flex items-center gap-1">
             <CiCalendar size={20} />
-            <span>{format(new Date(date_and_time), "cccc, dd MMM yyyy")}</span>
+            <span>{format(new Date(date_and_time || new Date()), "cccc, dd MMM yyyy")}</span>
           </p>
 
           <p className="flex items-center gap-1">
             <CiClock1 size={20} />
-            <span>{format(new Date(date_and_time), "h: mm BBBB")}</span>
+            <span>{format(new Date(date_and_time || new Date()), "h: mm BBBB")}</span>
           </p>
         </div>
 
@@ -39,7 +38,7 @@ const Event = ({ event }) => {
             <CiUser size={20} />
             <span>{author_name}</span>
           </p>
-          <p className="flex items-center gap-2 btn w-fit bg-main border-none">
+          <p className="flex items-center gap-2 btn w-fit bg-main border-none shadow-2xl">
             <FaUserTie size={20} />
             {attendeeCount}
           </p>

@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
     mutationFn: async (body) => {
       const { data } = await axiosSecure.post("/auth/login", body);
       if (data.success) {
-        toast.success(data?.message);
+        toast.success("Login Successful");
         setUser(data);
       }
     },

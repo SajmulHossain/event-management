@@ -1,13 +1,14 @@
 import { Outlet, useLocation } from "react-router";
 import Header from "./sharedComponents/Header";
 import useAuth from "./hooks/useAuth";
+import Loader from "./components/Loader";
 
 function App() {
   const { pathname } = useLocation();
   const {loading} = useAuth();
   
   if(loading) {
-    return;
+    return <Loader />;
   }
 
   return (
