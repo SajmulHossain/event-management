@@ -7,11 +7,13 @@ import Home from "../pages/Home/Home";
 import AddEvent from "../pages/AddEvent/AddEvent";
 import PrivetRoute from './PrivetRoute';
 import MyEvent from "../pages/MyEvent/MyEvent";
+import PageNotFound from "../pages/404/PageNotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <PageNotFound />,
     children: [
       {
         index: true,
