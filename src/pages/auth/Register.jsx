@@ -67,8 +67,8 @@ const Register = () => {
                         required
                         placeholder="Name"
                         pattern="[A-Za-z][A-Za-z]*"
-                        minlength="3"
-                        maxlength="40"
+                        minLength="3"
+                        maxLength="40"
                         title="Only letters, numbers or dash"
                       />
                     </label>

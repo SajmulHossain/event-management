@@ -106,7 +106,7 @@ const Login = () => {
                         required
                         name="password"
                         placeholder="Password"
-                        minlength="6"
+                        minLength="6"
                         pattern=".{6,}"
                         title="Must be atleast 6 characters"
                       />

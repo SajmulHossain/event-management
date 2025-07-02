@@ -20,7 +20,7 @@ const Banner = () => {
         </div>
       </div>
       <motion.div
-        className="absolute top-36 right-32 w-52"
+        className="absolute hidden lg:block top-36 right-32 w-52"
         initial={{ x: 50, y: 20 }}
         animate={{ x: [50, 40, 50], y: [20, 30, 20] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
@@ -28,7 +28,7 @@ const Banner = () => {
         <img src="https://i.ibb.co/Vp0jxjQR/img5.jpg" className="rounded-box" />
       </motion.div>
       <motion.div
-        className="absolute top-52 left-1/2 w-52"
+        className="absolute hidden lg:block top-52 left-1/2 w-52"
         initial={{ x: 50, y: 20 }}
         animate={{
           x: [50, 40, 50],
@@ -40,7 +40,7 @@ const Banner = () => {
         <img src="https://i.ibb.co/k2hqVxWY/img2.jpg" className="rounded-box" />
       </motion.div>
       <motion.div
-        className="absolute bottom-20 left-2/3 w-52"
+        className="absolute hidden lg:block bottom-20 left-2/3 w-52"
         initial={{ x: 50, y: 20 }}
         animate={{
           x: [10, 40, 10],

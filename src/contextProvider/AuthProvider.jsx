@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { error_msg } from "../utils/error.msg";
 import AuthContext from "./AuthContext";
+import { getLocalUser, setLocalUser } from "../utils/localUser";
 
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ const AuthProvider = ({ children }) => {
       if (data.success) {
         toast.success(data?.message);
         setUser(data.data);
+        setLocalUser();
       }
     },
     onError: (error) => {
@@ -32,6 +34,7 @@ const AuthProvider = ({ children }) => {
       if (data.success) {
         toast.success("Login Successful");
         setUser(data.data);
+        setLocalUser();
       }
     },
     onError: (error) => {
@@ -54,7 +57,13 @@ const AuthProvider = ({ children }) => {
       }
     };
 
-    fetchUserData();
+    const user  = getLocalUser();
+    if(user) {
+      fetchUserData();
+    } else {
+      setLoading(false);
+      setUser(null);
+    }
   }, [axiosSecure, fetchData]);
 
   const data = {

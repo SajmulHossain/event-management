@@ -30,7 +30,7 @@ const Event = ({ event }) => {
     joiningPeoples,
   } = event || {};
 
-  const isJoined = joiningPeoples?.find((people) => people === user.email);
+  const isJoined = joiningPeoples?.find((people) => people === user?.email);
 
   const { mutateAsync: joinEvent, isPending: joiningEvent } = useMutation({
     mutationKey: ["join event"],
@@ -123,7 +123,7 @@ const Event = ({ event }) => {
             <button
               ref={btnRef}
               onClick={() => joinEvent({ user_email: user.email })}
-              disabled={isJoined}
+              disabled={isJoined || !user}
               className={`btn disabled:text-gray-400 ${
                 joiningEvent ? "cursor-not-allowed pointer-events-none" : ""
               }`}

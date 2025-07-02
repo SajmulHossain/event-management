@@ -6,7 +6,7 @@ import Event from "../Events/Event";
 import { Link } from "react-router";
 const Feature = () => {
   const {data: events = [...Array(6)], isLoading} = useQuery({
-    queryKey: ["featured"],
+    queryKey: ["events","featured"],
     queryFn: async () => {
       const { data } = await axiosSecure("/public/featured");
       return data.data || [];

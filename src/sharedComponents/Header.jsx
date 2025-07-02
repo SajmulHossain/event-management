@@ -7,13 +7,16 @@ import { Link, NavLink, useNavigate } from "react-router";
 import whiteLogo from "../assets/logo/2.png";
 import Loading from "../components/Loading";
 import useAuth from "../hooks/useAuth";
-import { axiosSecure } from "../hooks/useAxiosSecure";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 import { error_msg } from "../utils/error.msg";
+import { removeLocalUser } from "../utils/localUser";
 
 const Header = () => {
-  const { user, fetchData, setFetchData } = useAuth();
+  const { user, fetchData, setFetchData, setUser } = useAuth();
   const navigate = useNavigate();
   const [clickLogout, setClickLogout] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  
 
 
     const {
@@ -28,10 +31,15 @@ const Header = () => {
             setFetchData(!fetchData);
             toast.success(data?.message);
             navigate("/auth/login");
+            removeLocalUser();
+            setUser(null);
           }
         } catch (error) {
           error_msg(error?.message?.response?.data);
         }
+
+        removeLocalUser();
+        setUser(null);
 
         return {};
       },

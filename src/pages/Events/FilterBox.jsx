@@ -51,7 +51,7 @@ const FilterBox = ({ setSearch, setTime }) => {
         </div>
 
         <div>
-          <div className="filter flex-nowrap">
+          <div className="filter">
             <input
               onChange={handleTimeChange}
               className="btn filter-reset"
