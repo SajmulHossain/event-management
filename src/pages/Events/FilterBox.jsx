@@ -59,7 +59,7 @@ const FilterBox = ({ setSearch, setTime }) => {
               name="time"
               aria-label="All"
               value=""
-              checked={newTime === ''}
+              checked={newTime === ""}
             />
             <input
               onChange={handleTimeChange}
@@ -82,17 +82,25 @@ const FilterBox = ({ setSearch, setTime }) => {
               className="btn"
               type="radio"
               name="time"
+              aria-label="Last Week"
+              value="last-week"
+            />
+            <input
+              onChange={handleTimeChange}
+              className="btn"
+              type="radio"
+              name="time"
               aria-label="This Month"
               value="this-month"
             />
-              <input
-                onChange={handleTimeChange}
-                className="btn"
-                type="radio"
-                name="time"
-                aria-label="Last Month"
-                value="last-month"
-              />
+            <input
+              onChange={handleTimeChange}
+              className="btn"
+              type="radio"
+              name="time"
+              aria-label="Last Month"
+              value="last-month"
+            />
           </div>
         </div>
 
