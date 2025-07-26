@@ -26,7 +26,7 @@ const Header = () => {
       enabled: clickLogout,
       queryFn: async () => {
         try {
-          const { data } = await axiosSecure("/auth/logout");
+          const { data } = await axiosSecure.post("/auth/logout");
           if (data?.success) {
             setFetchData(!fetchData);
             toast.success(data?.message);

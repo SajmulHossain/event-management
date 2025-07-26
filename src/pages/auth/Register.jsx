@@ -70,6 +70,7 @@ const Register = () => {
                         minLength="3"
                         maxLength="40"
                         title="Only letters, numbers or dash"
+                        name="name"
                       />
                     </label>
                     <p className="validator-hint hidden">
