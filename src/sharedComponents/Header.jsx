@@ -9,41 +9,32 @@ import Loading from "../components/Loading";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { error_msg } from "../utils/error.msg";
-import { removeLocalUser } from "../utils/localUser";
 
 const Header = () => {
   const { user, fetchData, setFetchData, setUser } = useAuth();
   const navigate = useNavigate();
   const [clickLogout, setClickLogout] = useState(false);
   const axiosSecure = useAxiosSecure();
-  
 
-
-    const {
-      isLoading: isLoggingOut,
-    } = useQuery({
-      queryKey: ["logout"],
-      enabled: clickLogout,
-      queryFn: async () => {
-        try {
-          const { data } = await axiosSecure.post("/auth/logout");
-          if (data?.success) {
-            setFetchData(!fetchData);
-            toast.success(data?.message);
-            navigate("/auth/login");
-            removeLocalUser();
-            setUser(null);
-          }
-        } catch (error) {
-          error_msg(error?.message?.response?.data);
+  const { isLoading: isLoggingOut } = useQuery({
+    queryKey: ["logout"],
+    enabled: clickLogout,
+    queryFn: async () => {
+      try {
+        const { data } = await axiosSecure.post("/auth/logout");
+        if (data?.success) {
+          setFetchData(!fetchData);
+          toast.success(data?.message);
+          navigate("/auth/login");
+          setUser(null);
         }
+      } catch (error) {
+        error_msg(error?.message?.response?.data);
+      }
 
-        removeLocalUser();
-        setUser(null);
-
-        return {};
-      },
-    });
+      return {};
+    },
+  });
 
   const links = [
     {
@@ -125,9 +116,7 @@ const Header = () => {
                   tabIndex={0}
                   className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
                 >
-                  <div
-                  className="space-y-2"
-                  >
+                  <div className="space-y-2">
                     <p className="text-nowrap bg-sec p-2 font-semibold rounded-md text-white pointer-events-none text-center">
                       Sajmul Hossain
                     </p>
